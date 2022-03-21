@@ -1,0 +1,379 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12">
+      <div class="card card-widget widget-user">
+        <!-- Add the bg color to the header using any of the bg-* classes -->
+        <div class="widget-user-header bg-info">
+          <h3 class="widget-user-username">{{ user.prenom }} {{ user.nom }}</h3>
+          <h5 class="widget-user-desc">{{ user.adresse }}</h5>
+        </div>
+        <div class="widget-user-image">
+          <img
+            class="img-circle elevation-2"
+            [src]="
+              user.imageURL === ''
+                ? 'assets/dist/img/user1-128x128.jpg'
+                : server + user.imageURL
+            "
+            alt="User Avatar"
+          />
+        </div>
+        <div class="card-footer">
+          <div class="row">
+            <div class="col-sm-4 border-right">
+              <div class="description-block">
+                <h5 class="description-header">3,200</h5>
+                <span class="description-text">Versements</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4 border-right">
+              <div class="description-block">
+                <h5 class="description-header">{{ epargnes.length }}</h5>
+                <span class="description-text">Epargnes</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+            <div class="col-sm-4">
+              <div class="description-block">
+                <h5 class="description-header">
+                  <i class="fas fa-solid fa-check"></i>
+                  <i class="fas fa-solid fa-close"></i>
+                </h5>
+                <span class="description-text">CNI</span>
+              </div>
+              <!-- /.description-block -->
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- /.row -->
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header border-transparent">
+          <h3 class="card-title">Listes des Epargnes</h3>
+
+          <div class="card-tools">
+            <button
+              type="button"
+              class="btn btn-tool"
+              data-card-widget="collapse"
+            >
+              <i class="fas fa-minus"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+          <h2 *ngIf="epargnes.length <= 0" class="text-center py-5">
+            Aucune Epargne
+          </h2>
+          <div class="table-responsive" *ngIf="epargnes.length > 0">
+            <table class="table m-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Produit</th>
+                  <th>Status</th>
+                  <th>Echéance</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  *ngFor="let item of epargnes; let i = index"
+                  (click)="getVersement(item)"
+                >
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.produit.nom }}</td>
+                  <td>
+                    <span
+                      *ngIf="item.status === 'progress'"
+                      class="badge badge-warning"
+                      >En cours</span
+                    >
+                    <span
+                      *ngIf="item.status === 'finished'"
+                      class="badge badge-info"
+                      >Terminée</span
+                    >
+
+                    <span
+                      *ngIf="item.status === 'pay'"
+                      class="badge badge-success"
+                      >Payée</span
+                    >
+                    <!-- <span class="badge badge-danger">Delivered</span> -->
+                  </td>
+                  <td>
+                    <div class="sparkbar" data-color="#00a65a" data-height="20">
+                      {{ item.echeance | date: "fullDate" }}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+          <a
+            href="javascript:void(0)"
+            class="btn btn-sm btn-info float-left"
+            data-toggle="modal"
+            data-target="#modal-default"
+            >Nouvelle Epargne</a
+          >
+        </div>
+        <!-- /.card-footer -->
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header border-transparent">
+          <h3 class="card-title">
+            Liste des versements pour {{ epargne?.produit?.nom }}
+          </h3>
+
+          <div class="card-tools">
+            <button
+              type="button"
+              class="btn btn-tool"
+              data-card-widget="collapse"
+            >
+              <i class="fas fa-minus"></i>
+            </button>
+            <button
+              type="button"
+              class="btn btn-tool"
+              data-card-widget="remove"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+          <h2
+            *ngIf="verserments?.versements.lenght <= 0"
+            class="text-center py-5"
+          >
+            Aucun Versement
+          </h2>
+          <div class="table-responsive">
+            <table class="table m-0">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Montant</th>
+                  <th>Mode de paiment</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of verserments?.versements; let i = index">
+                  <td>{{ i + 1 }}</td>
+                  <td>{{ item.montant | currency: "XAF" }}</td>
+                  <td>
+                    <div class="sparkbar" data-color="#00a65a" data-height="20">
+                      {{ item.mode }}
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer clearfix">
+          <a
+            href="javascript:void(0)"
+            class="btn btn-sm btn-info float-left"
+            data-toggle="modal"
+            data-target="#modal-default-ver"
+            >Faire un versement</a
+          >
+          <div class="d-flex align-items-center float-right">
+            <h5 class="mr-2">Total:</h5>
+            <p>
+              {{ verserments?.payer | currency: "XAF" }} /
+              {{ verserments?.epargne?.produit?.prix || 0 | currency: "XAF" }}
+            </p>
+          </div>
+        </div>
+        <!-- /.card-footer -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- modals -->
+
+<div class="modal fade" id="modal-default-ver">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Faire un versement</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Mode de paiment</label>
+              <select
+                class="form-control"
+                [(ngModel)]="modePaiement"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <option value="mobile">Paiement Mobile</option>
+                <option value="agence">Paiement en Espèce</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Montant</label>
+              <input
+                class="form-control"
+                type="number"
+                [(ngModel)]="montant"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <!-- <div class="form-group">
+              <label for="exampleInputPassword1">Déscription</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="Déscription de la catégorie"
+              />
+            </div> -->
+          </div>
+          <!-- /.card-body -->
+        </form>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Annuler
+        </button>
+        <button type="button" class="btn btn-primary" (click)="Verser()">
+          Verser
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Ajouter une Epargne</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Categories</label>
+              <select
+                class="form-control"
+                (change)="getProductFromCategory($event)"
+                [(ngModel)]="categorie"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <option [value]="item._id" *ngFor="let item of categories">
+                  {{ item.nom }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Produits</label>
+              <select
+                class="form-control"
+                [(ngModel)]="produit"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <option>Choisisez votre produit...</option>
+                <option [value]="item._id" *ngFor="let item of produits">
+                  {{ item.nom }} - {{ item.prix | currency: "XAF" }}
+                </option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label>Echeance:</label>
+              <input
+                type="date"
+                class="form-control"
+                [(ngModel)]="date"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <!-- <div class="form-group">
+              <label for="exampleInputEmail1">tes</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                placeholder="Entrer le nom de la Catégorie"
+              />
+            </div> -->
+            <div class="form-group">
+              <label>Frequence</label>
+              <select
+                class="form-control"
+                [(ngModel)]="frequence"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <option value="jour">Journalier</option>
+                <option value="semaine">Hebdomadaire</option>
+                <option value="mois">Mensuelle</option>
+              </select>
+            </div>
+            <!-- <div class="form-group">
+              <label for="exampleInputPassword1">Déscription</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="Déscription de la catégorie"
+              />
+            </div> -->
+          </div>
+          <!-- /.card-body -->
+        </form>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="AjouterEpargne()"
+        >
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

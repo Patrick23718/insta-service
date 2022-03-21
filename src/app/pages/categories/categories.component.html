@@ -1,0 +1,231 @@
+<section>
+  <!-- <div>
+    <div>
+      <div> -->
+  <div class="card mt-4">
+    <div class="card-header">
+      <h3 class="card-title">Gestion des catégories</h3>
+    </div>
+    <div class="row mt-4 px-4">
+      <div class="col-md-2">
+        <button
+          type="button"
+          class="btn btn-info btn-flat"
+          data-toggle="modal"
+          data-target="#modal-default"
+        >
+          Nouvelle Catégorie
+        </button>
+      </div>
+      <div class="col-md-4 offset-md-6">
+        <div class="input-group input-group">
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Recherche..."
+            [(ngModel)]="search"
+            [ngModelOptions]="{ standalone: true }"
+            (keyup)="getCategories()"
+          />
+          <span class="input-group-append">
+            <button type="button" class="btn btn-info btn-flat">Go!</button>
+            <!-- <button type="button" class=""></button> -->
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <table id="example1" class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th *ngFor="let item of headers">{{ item }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of items; let i = index">
+            <td>{{ i + 1 }}</td>
+            <td>{{ item?.nom }}</td>
+            <td>
+              {{ item?.description | slice: 0:80 }}
+            </td>
+            <td>{{ item?.createdAt | date: "fullDate" }}</td>
+            <td class="">
+              <button
+                type="button"
+                class="btn-xs btn-outline-info mr-2"
+                data-toggle="modal"
+                data-target="#modal-default2"
+                (click)="categorie = item"
+              >
+                <i class="fas fa-light fa-edit"></i>
+              </button>
+              <button
+                type="button"
+                class="btn-xs btn-outline-danger"
+                (click)="ArchiveCategorie(item)"
+              >
+                <i class="fas fa-thin fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th *ngFor="let item of headers">{{ item }}</th>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <!-- </div>
+    </div>
+  </div> -->
+</section>
+
+<div class="modal fade" id="modal-default">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Ajout d'une Categorie</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nom</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                placeholder="Entrer le nom de la Catégorie"
+                [(ngModel)]="categorie.nom"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Déscription</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="Déscription de la catégorie"
+                [(ngModel)]="categorie.description"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </form>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="AjoutCategorie()"
+        >
+          Enregistrer
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade" id="modal-overlay">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="overlay">
+        <i class="fas fa-2x fa-sync fa-spin"></i>
+      </div>
+      <div class="modal-header">
+        <h4 class="modal-title">Default Modal</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>One fine body&hellip;</p>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Close
+        </button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="modal fade" id="modal-default2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Modifier d'une Categorie</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="card-body">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nom</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                placeholder="Entrer le nom de la Catégorie"
+                [(ngModel)]="categorie.nom"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Déscription</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="Déscription de la catégorie"
+                [(ngModel)]="categorie.description"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </form>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default" data-dismiss="modal">
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="ModifierCategorie()"
+        >
+          Modifier
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
