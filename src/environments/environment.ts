@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  // serverURL: 'https://cotisation.herokuapp.com',
-  serverURL: 'http://localhost:3000',
+  serverURL: 'https://cotisation.herokuapp.com',
+  // serverURL: 'http://localhost:3000',
 };
 
 /*
