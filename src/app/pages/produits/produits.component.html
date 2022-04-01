@@ -25,7 +25,7 @@
             placeholder="Recherche..."
             [(ngModel)]="search"
             [ngModelOptions]="{ standalone: true }"
-            (keyup)="getCategories()"
+            (keyup)="getAllProduct()"
           />
           <span class="input-group-append">
             <button
@@ -49,21 +49,21 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of items">
+          <tr *ngFor="let item of produits">
             <td>{{ item?.nom }}</td>
             <td>
               {{ item?.description | slice: 0:80 }}
             </td>
-            <td>{{ item?.createdAt | date: "fullDate" }}</td>
+            <td>{{ item?.prix | currency: "XAF" }}</td>
+            <td>{{ item?.category?.nom | titlecase }}</td>
+            <!-- <td>{{ item?.createdAt | date: "fullDate" }}</td> -->
             <td class="">
               <button
                 type="button"
                 class="btn-xs btn-outline-info mr-2"
                 data-toggle="modal"
                 data-target="#modal-default2"
-                (click)="
-                  categorie = item; nom = item.nom; desc = item.description
-                "
+                (click)="setItem(item)"
               >
                 <i class="fas fa-light fa-edit"></i>
               </button>
@@ -79,9 +79,7 @@
         </tbody>
         <tfoot>
           <tr>
-            <th>Rendering engine</th>
-            <th>Browser</th>
-            <th>Platform(s)</th>
+            <th *ngFor="let item of headers">{{ item }}</th>
           </tr>
         </tfoot>
       </table>
@@ -96,7 +94,7 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Ajout d'une Categorie</h4>
+        <h4 class="modal-title">Ajout d'un Produit</h4>
         <button
           type="button"
           class="close"
@@ -109,6 +107,18 @@
       <div class="modal-body">
         <form>
           <div class="card-body">
+            <div class="form-group">
+              <label>Categorie</label>
+              <select
+                class="form-control"
+                [(ngModel)]="categorie"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <option *ngFor="let item of items" [value]="item?._id">
+                  {{ item?.nom }}
+                </option>
+              </select>
+            </div>
             <div class="form-group">
               <label for="exampleInputEmail1">Nom</label>
               <input
@@ -131,18 +141,34 @@
                 [ngModelOptions]="{ standalone: true }"
               />
             </div>
+            <div class="form-group">
+              <label for="exampleprix">Prix</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleprix"
+                [(ngModel)]="prix"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
           </div>
           <!-- /.card-body -->
         </form>
       </div>
       <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default" data-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-default"
+          data-dismiss="modal"
+          (click)="resetValue()"
+        >
           Annuler
         </button>
         <button
           type="button"
           class="btn btn-primary"
-          (click)="AjoutCategorie()"
+          (click)="AjoutProduit()"
+          data-dismiss="modal"
         >
           Enregistrer
         </button>
@@ -185,6 +211,93 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
+        <h4 class="modal-title">Modification d'un Produit</h4>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="card-body">
+            <div class="form-group">
+              <label>Categorie</label>
+              <select
+                class="form-control"
+                [(ngModel)]="categorie"
+                [ngModelOptions]="{ standalone: true }"
+              >
+                <option *ngFor="let item of items" [value]="item?._id">
+                  {{ item?.nom }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Nom</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputEmail1"
+                placeholder="Entrer le nom de la Catégorie"
+                [(ngModel)]="nom"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Déscription</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleInputPassword1"
+                placeholder="Déscription de la catégorie"
+                [(ngModel)]="desc"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+            <div class="form-group">
+              <label for="exampleprix">Prix</label>
+              <input
+                type="text"
+                class="form-control"
+                id="exampleprix"
+                [(ngModel)]="prix"
+                [ngModelOptions]="{ standalone: true }"
+              />
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </form>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button
+          type="button"
+          class="btn btn-default"
+          data-dismiss="modal"
+          (click)="resetValue()"
+        >
+          Annuler
+        </button>
+        <button
+          type="button"
+          class="btn btn-primary"
+          (click)="ModifierProduit()"
+          data-dismiss="modal"
+        >
+          Modifier
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="modal fade" id="modal-default2">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
         <h4 class="modal-title">Modifier d'une Categorie</h4>
         <button
           type="button"
@@ -221,7 +334,6 @@
               />
             </div>
           </div>
-          <!-- /.card-body -->
         </form>
       </div>
       <div class="modal-footer justify-content-between">
@@ -238,4 +350,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

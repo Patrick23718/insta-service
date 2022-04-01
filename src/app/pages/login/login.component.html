@@ -1,78 +1,121 @@
-<div class="container">
-  <div
-    class="row d-flex justify-content-center align-items-center"
-    style="min-height: 100vh"
-  >
-    <div class="col-md-7">
-      <div class="card card-info">
-        <div class="card-header">
-          <h3 class="card-title">Connexion</h3>
+<script>
+  (function (w, d, s, l, i) {
+    w[l] = w[l] || [];
+    w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+    var f = d.getElementsByTagName(s)[0],
+      j = d.createElement(s),
+      dl = l != "dataLayer" ? "&l=" + l : "";
+    j.async = true;
+    j.src =
+      "../../../../../../www.googletagmanager.com/gtm5445.js?id=" + i + dl;
+    f.parentNode.insertBefore(j, f);
+  })(window, document, "script", "dataLayer", "GTM-TAGCODE");
+</script>
+<div id="top">
+  <!-- Google Tag Manager (noscript) -->
+  <noscript
+    ><iframe
+      src="https://www.googletagmanager.com/ns.html?id=GTM-TAGCODE"
+      height="0"
+      width="0"
+      style="display: none; visibility: hidden"
+    ></iframe
+  ></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <div class="page_loader"></div>
+
+  <!-- Login 17 start -->
+  <div class="login-17">
+    <div class="container-fluid">
+      <div class="row login-bo">
+        <div class="col-lg-6 bg-color-15 pad-0 none-992 bg-img">
+          <div class="info clearfix">
+            <h1>Bienvenu sur <span>Instant Service</span></h1>
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting
+              industry. Lorem Ipsum has been the industry's standard dummy text
+              ever since the 1500s, when an unknown printer took a galley of
+              type and scrambled it to make a type
+            </p>
+          </div>
         </div>
-        <!-- /.card-header -->
-        <!-- form start -->
-        <form class="form-horizontal">
-          <div class="card-body">
-            <div class="form-group row">
-              <label for="inputEmail3" class="col-sm-3 col-form-label"
-                >Email</label
-              >
-              <div class="col-sm-9">
+        <div class="col-lg-6 align-self-center pad-0 form-section clip-home">
+          <div class="form-inner">
+            <a href="login-17.html" class="logo">
+              <img src="assets/img/logos/logo-2.png" alt="logo" />
+            </a>
+            <h3>Se connecter à votre compte</h3>
+            <form action="#" method="GET">
+              <div class="form-group form-box">
                 <input
-                  type="text"
+                  type="email"
+                  name="email"
                   class="form-control"
-                  id="inputEmail3"
-                  placeholder="Numéro de téléphone"
+                  placeholder="Adresse Email"
+                  aria-label="Email Address"
                   [(ngModel)]="numero"
                   [ngModelOptions]="{ standalone: true }"
                 />
+                <i class="flaticon-mail-2"></i>
               </div>
-            </div>
-            <div class="form-group row">
-              <label for="inputPassword3" class="col-sm-3 col-form-label"
-                >Mot de passe</label
-              >
-              <div class="col-sm-9">
+              <div class="form-group form-box">
                 <input
                   type="password"
+                  name="password"
                   class="form-control"
-                  id="inputPassword3"
+                  autocomplete="off"
                   placeholder="Mot de passe"
+                  aria-label="Password"
                   [(ngModel)]="pwd"
                   [ngModelOptions]="{ standalone: true }"
                 />
+                <i class="flaticon-password"></i>
               </div>
-            </div>
-            <div class="form-group row">
-              <div class="offset-sm-3 col-sm-9">
-                <div class="form-check">
+              <div class="checkbox form-group form-box">
+                <div class="form-check checkbox-theme">
                   <input
-                    type="checkbox"
                     class="form-check-input"
-                    id="exampleCheck2"
+                    type="checkbox"
+                    value=""
+                    id="rememberMe"
                   />
-                  <label class="form-check-label" for="exampleCheck2"
-                    >Se souvenir de moi</label
-                  >
+                  <label class="form-check-label" for="rememberMe">
+                    Se souvenir de moi
+                  </label>
                 </div>
+                <a href="forgot-password-17.html" class="forgot-password"
+                  >Mot de passe oublié?</a
+                >
               </div>
-            </div>
+              <div class="form-group">
+                <button
+                  type="submit"
+                  class="btn-md btn-theme w-100"
+                  (click)="login()"
+                >
+                  Se Connecter
+                </button>
+              </div>
+
+              <!-- <div class="extra-login form-group clearfix">
+                <span>Or Login With</span>
+              </div>
+              <div class="clearfix"></div>
+              <ul class="social-list clearfix">
+                <li><a href="#" class="facebook-bg">Facebook</a></li>
+                <li><a href="#" class="twitter-bg">Twitter</a></li>
+                <li><a href="#" class="google-bg">Google</a></li>
+              </ul> -->
+            </form>
+            <div class="clearfix"></div>
+            <!-- <p>
+              Don't have an account?
+              <a href="register-17.html" class="thembo"> Register here</a>
+            </p> -->
           </div>
-          <!-- /.card-body -->
-          <div class="card-footer">
-            <button
-              type="submit"
-              class="btn btn-info float-right"
-              (click)="login()"
-            >
-              Se connecter
-            </button>
-            <button type="button" class="btn btn-danger swalDefaultError">
-              Launch Error Toast
-            </button>
-          </div>
-          <!-- /.card-footer -->
-        </form>
+        </div>
       </div>
     </div>
   </div>
+  <!-- Login 17 end -->
 </div>

@@ -12,8 +12,8 @@ export class UtilisateursService {
 
   constructor(private http: HttpClient) {}
 
-  getAllUsers(): Observable<Epargne | any> {
-    return this.http.get(this.serverURL + '/users');
+  getAllUsers(s: string = ''): Observable<Epargne | any> {
+    return this.http.get(this.serverURL + '/users?s=' + s);
   }
 
   login(numero: string, pwd: string): Observable<any> {

@@ -40,6 +40,8 @@
             ],
             "scripts": [
               "src/assets/plugins/jquery/jquery.min.js",
+              "src/assets/plugins/popper.min.js",
+              "src/assets/plugins/bootstrap.bundle.min.js",
               "src/assets/plugins/jquery-ui/jquery-ui.min.js",
               "src/assets/plugins/bootstrap/js/bootstrap.bundle.min.js",
               "src/assets/plugins/chart.js/Chart.min.js",
@@ -60,8 +62,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "3mb",
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",

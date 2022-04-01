@@ -1,0 +1,11 @@
+.badge-info {
+  background: rgba($color: #e21e32, $alpha: 0.7) !important;
+  border-color: transparent;
+  color: white !important;
+}
+
+.side {
+  background: url(../../../assets/dist/img/photo4.jpg),
+    rgba($color: #e21e32, $alpha: 0.3);
+  background-blend-mode: overlay;
+}

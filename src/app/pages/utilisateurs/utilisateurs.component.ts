@@ -8,6 +8,7 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./utilisateurs.component.scss'],
 })
 export class UtilisateursComponent implements OnInit {
+  search: string = '';
   server = environment.serverURL;
   constructor(private userService: UtilisateursService) {}
 
@@ -17,7 +18,7 @@ export class UtilisateursComponent implements OnInit {
   }
 
   getAllUsers() {
-    this.userService.getAllUsers().subscribe((res: any) => {
+    this.userService.getAllUsers(this.search).subscribe((res: any) => {
       console.log(res);
       this.users = res;
     });

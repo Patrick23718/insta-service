@@ -22,7 +22,14 @@
       </div>
       <div class="col-sm-6">
         <div class="input-group input-group">
-          <input type="text" class="form-control" placeholder="Recherche..." />
+          <input
+            type="text"
+            class="form-control"
+            placeholder="Recherche..."
+            [(ngModel)]="search"
+            [ngModelOptions]="{ standalone: true }"
+            (keyup)="getAllUsers()"
+          />
           <span class="input-group-append">
             <button type="button" class="btn btn-info btn-flat">Go!</button>
           </span>
@@ -74,7 +81,7 @@
                     [src]="
                       item.imageURL === ''
                         ? 'assets/dist/img/user1-128x128.jpg'
-                        : server + item.imageURL
+                        : server + '/' + item.imageURL
                     "
                     alt="user-avatar"
                     class="img-circle img-fluid"
@@ -99,21 +106,6 @@
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="card-footer">
-      <nav aria-label="Contacts Page Navigation">
-        <ul class="pagination justify-content-center m-0">
-          <li class="page-item active"><a class="page-link" href="#">1</a></li>
-          <li class="page-item"><a class="page-link" href="#">2</a></li>
-          <li class="page-item"><a class="page-link" href="#">3</a></li>
-          <li class="page-item"><a class="page-link" href="#">4</a></li>
-          <li class="page-item"><a class="page-link" href="#">5</a></li>
-          <li class="page-item"><a class="page-link" href="#">6</a></li>
-          <li class="page-item"><a class="page-link" href="#">7</a></li>
-          <li class="page-item"><a class="page-link" href="#">8</a></li>
-        </ul>
-      </nav>
     </div>
   </div>
 </section>

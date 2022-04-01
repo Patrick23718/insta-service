@@ -10,16 +10,14 @@ import { UtilisateursService } from 'src/app/shared/services/utilisateurs.servic
 })
 export class LoginComponent implements OnInit {
   pwd: string = '123456';
-  numero: string = '655602173';
+  numero: string = '698586318';
   numMsgError: string = '';
   constructor(
     private userService: UtilisateursService,
     private router: Router
   ) {}
 
-  ngOnInit(): void {
-    console.log(localStorage.getItem('x-access-token'));
-  }
+  ngOnInit(): void {}
 
   validator(): boolean {
     var res: boolean = true;
@@ -32,17 +30,16 @@ export class LoginComponent implements OnInit {
 
   login() {
     this.userService.login(this.numero, this.pwd).subscribe((res) => {
-      console.log(res);
       if (res.role !== 'admin') {
         console.log('pas connecter');
       } else {
         const user = {
-          id: '6226066288b2210be11a55ed',
-          imageURL: '',
-          nom: 'Noukimi',
-          numero: '655602173',
-          prenom: 'Patson',
-          role: 'admin',
+          id: res.id,
+          imageURL: res.imageURL,
+          nom: res.nom,
+          numero: res.numero,
+          prenom: res.prenom,
+          role: res.role,
         };
         localStorage.setItem('x-access-token', res.accessToken);
         localStorage.setItem('user', JSON.stringify(user));

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AjoutUtilisateurComponent } from 'src/app/pages/ajout-utilisateur/ajout-utilisateur.component';
 import { CategoriesArchiveComponent } from 'src/app/pages/categories/categories-archive/categories-archive.component';
 import { CategoriesComponent } from 'src/app/pages/categories/categories.component';
 import { EpargnesComponent } from 'src/app/pages/epargnes/epargnes.component';
@@ -21,10 +22,15 @@ const routes: Routes = [
     component: DashboardComponent,
     children: [
       { path: '', component: HomeComponent },
+
       {
         path: 'utilisateurs',
         children: [
           { path: '', component: UtilisateursComponent },
+          {
+            path: 'ajout',
+            component: AjoutUtilisateurComponent,
+          },
           { path: ':uid', component: UserDetailComponent },
         ],
       },
